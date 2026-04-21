@@ -8,19 +8,18 @@
 
 **Roastory** is a web-based library-cafe management system developed by the **K-Forge** team as the final project for the "Nuevas Tecnologias de Desarrollo" (NTD) course at Fundacion Universitaria Konrad Lorenz. 
 
-- **Phase:** Early development — stack and architecture are currently under definition with the professor.
-- **Primary Audience (UI/Docs):** Spanish (Users and Professor).
-- **Secondary Audience (Code/Agents):** English (Commits, Agent Instructions, Code Variables).
+- **Phase:** Active Development (Taller 4) — Backend API implementation phase.
+- **Language Scope:** All documentation, codebase (variables, classes, comments), commit messages, and agent instructions MUST be in **English**. (User-facing UI may remain in Spanish if required by the professor, but all internal work is English).
 
 ## Tech Stack
 
-> **Note:** The exact stack is currently under definition. Agents MUST verify configuration files (e.g., `package.json`, `pom.xml`) before assuming a specific framework.
+> **Note:** The core stack has been defined. Agents MUST verify configuration files (e.g., `package.json`, `pnpm-lock.yaml`, `angular.json`) before executing commands.
 
-- **Frontend:** TBD (e.g., React, Angular, or Vue)
-- **Backend:** TBD (e.g., Node.js, Spring Boot, or Django)
-- **Database:** TBD (e.g., PostgreSQL, MySQL, or MongoDB)
-- **Package Manager:** TBD
-- **Containers:** TBD (Docker expected)
+- **Frontend:** Angular
+- **Backend:** Node.js with Express
+- **Database:** MongoDB (Atlas)
+- **Package Manager:** pnpm
+- **Containers:** Docker (Expected for future deployment phases)
 
 ## Core Modules
 
@@ -31,32 +30,39 @@
 | **Point of Sale (POS)**| Sales recording, cart management, and totals calculation.    |
 | **Customer Mgmt**      | Customer registry and purchase history tracking.             |
 | **Reports**            | Sales by period and best-selling products analytics.         |
+| **Auth & Users**       | JWT and Bcrypt based authentication and user management.     |
+| **Billing**            | Logic for generating and downloading PDF invoices.           |
 
 ## Anticipated Repository Structure
 
 ```text
 Roastory/
-├── backend/                 # Backend application code (TBD)
-├── frontend/                # Frontend application code (TBD)
-├── database/                # SQL/NoSQL scripts and seed data (TBD)
-├── docs/                    # Technical documentation and diagrams
-│   ├── REQUIREMENTS.md      # Functional requirements
-│   └── DESIGN.md            # Architecture decisions
+├── backend/                 # Node.js + Express REST API (To be initialized)
+├── frontend/                # Angular application code (To be initialized)
+├── database/                # MongoDB scripts and seed data (To be initialized)
+├── DOCUMENTACION/           # Technical documentation, schedules, and summaries
+│   ├── Cronograma Taller 4 Roastory.txt
+│   └── RoastoryResumenEjecutivo_Entrega1.txt
 ├── assets/                  # Images, logos, and UI placeholders
 │   ├── KForge-Yellow-Logo.png
 │   └── project-banner.svg
 ├── CONTRIBUTING.md
 ├── CONTRIBUTORS.md
-└── README.md
+├── Contexto.md              # Project context, roles, and Taller 4 assignments
+├── AGENTS.md                # AI Agents context and strict rules
+├── CLAUDE.md                # Agent instruction pointer
+├── LICENSE                  # Project license
+└── README.md                # Main project documentation
 ```
 
 ## Conventions
 
-- **Commits:** `type: message in english` (e.g., `feat: add product catalog search`, `fix: resolve inventory calculation bug`). Follow Conventional Commits strictly.
-- **Branches:** Git Flow (`main`, `develop`, `feature/*`, `chore/*`, `bugfix/*`, `hotfix/*`).
+- **Commits:** `type: message in english` (e.g., `feat: add product catalog search`, `fix: resolve inventory calculation bug`). Follow Conventional Commits strictly. Read CONTRIBUTING.md
+- **Branches:** Git Flow (`main`, `develop`, `feature/*`, `chore/*`, `bugfix/*`, `hotfix/*`) and `NameSurname` format for current assignments.
 - **Language Policy:** 
-  - User-facing UI, documentation (README, CONTRIBUTING), and user-directed comments MUST be in **Spanish**.
-  - Code (variables, functions, classes, models), commit messages, and internal agent instructions MUST be in **English**.
+  - **Code, Variables, Comments:** English ONLY.
+  - **Documentation (README, Contexto.md, etc.):** English ONLY.
+  - **Commit Messages:** English ONLY.
 
 ## Versioning
 
@@ -69,15 +75,15 @@ Format: `MAJOR.MINOR.PATCH`.
 
 - **Core Entities:** `User`, `Customer`, `Product` (inheritance for `Book`, `Beverage`, `Food`), `Inventory`, `Order`, `OrderDetail`.
 - **Enums expected:** `Role` (ADMIN, CASHIER, INVENTORY_MANAGER), `OrderStatus` (PENDING, COMPLETED, CANCELLED).
-- **Security:** Passwords must be hashed. No sensitive data stored in plain text.
+- **Security:** Passwords must be hashed using bcrypt. No sensitive data stored in plain text. JWT used for session management.
 
-## High-Priority Tasks (Current Phase)
+## High-Priority Tasks (Current Phase - Taller 4)
 
-1. Finalize and document the Tech Stack with the course professor.
-2. Initialize project scaffolding (Frontend, Backend, Database) based on the approved stack.
-3. Design and document the initial Database Schema.
-4. Setup environment variables templates (`.env.example`).
-5. Create initial UI wireframes for the POS and Catalog modules.
+1. Initialize project scaffolding (Angular Frontend, Express Backend, MongoDB Database) using **pnpm**.
+2. Implement User Auth module (JWT/Bcrypt) and secure routes with middleware.
+3. Implement Inventory (CRUD) and Sales (CRUD) modules.
+4. Implement Billing module with PDF generation logic.
+5. Setup Postman collections and populate the database with real test data.
 
 ## AI Agent Instructions
 
@@ -85,4 +91,4 @@ Format: `MAJOR.MINOR.PATCH`.
 - **Do NOT assume:** Do not assume standard test commands or build tools. Always read the directory configuration files first.
 - **Communication:** Never use emojis in technical documents (e.g., `.md` files). Keep structures professional and formal.
 - **Scope Limitation:** Limit changes strictly to the requested scope. Do not refactor unrelated code unless explicitly asked by the user.
-- **Knowledge Sync:** Always read `README.md` and `CONTRIBUTING.md` to understand current progress and formatting rules before suggesting changes.
+- **Knowledge Sync:** Always read `README.md`, `Contexto.md` and `CONTRIBUTING.md` to understand current progress and formatting rules before suggesting changes.
