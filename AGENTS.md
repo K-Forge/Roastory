@@ -87,6 +87,7 @@ Format: `MAJOR.MINOR.PATCH`.
 
 ## AI Agent Instructions
 
+- **Branch Syncing & Respecting Teammates' Work:** NEVER overwrite or skip another teammate's work. Before starting new features or making a push, ALWAYS branch off the latest teammate's branch or pull their changes if working on a shared branch, so their progress is preserved and accumulated.
 - **Do NOT modify:** `.env` files (contains secrets). Always use `.env.example` for templates.
 - **Do NOT assume:** Do not assume standard test commands or build tools. Always read the directory configuration files first.
 - **Communication:** Never use emojis in technical documents (e.g., `.md` files). Keep structures professional and formal.
