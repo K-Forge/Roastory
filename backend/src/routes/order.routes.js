@@ -15,12 +15,13 @@ const verifyToken = (req, res, next) => next();
 const requireRole = (role) => (req, res, next) => next();
 
 // Create a new order (Sale) - Protected: Must be logged in
+router.post('/', verifyToken, createOrder);
 
 // Retrieve all orders - Protected: Must be logged in
-router.get('/', getOrders);
+router.get('/', verifyToken, getOrders);
 
 // Retrieve a specific order by ID - Protected: Must be logged in
-router.get('/:id', getOrderById);
+router.get('/:id', verifyToken, getOrderById);
 
 // Update order status/details - Protected: Must be ADMIN or CASHIER
 router.put('/:id', verifyToken, requireRole('ADMIN'), updateOrder);
