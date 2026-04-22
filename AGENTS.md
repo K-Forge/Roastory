@@ -87,6 +87,9 @@ Format: `MAJOR.MINOR.PATCH`.
 
 ## AI Agent Instructions
 
+- **Branch Syncing & Respecting Teammates' Work:** NEVER overwrite or skip another teammate's work. Before starting new features or making a push, ALWAYS branch off the latest teammate's branch or pull their changes if working on a shared branch, so their progress is preserved and accumulated.
+- **Strict Task Boundaries:** NEVER write code, templates, or even commented-out stubs for tasks assigned to other team members. Let them figure out their own implementations and setup.
+- **Review Before Commit:** ALWAYS present the implementation plan and the written code to the user for review BEFORE executing a git commit. Never commit automatically without explicit user approval.
 - **Do NOT modify:** `.env` files (contains secrets). Always use `.env.example` for templates.
 - **Do NOT assume:** Do not assume standard test commands or build tools. Always read the directory configuration files first.
 - **Communication:** Never use emojis in technical documents (e.g., `.md` files). Keep structures professional and formal.
