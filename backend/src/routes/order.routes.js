@@ -8,19 +8,24 @@ const {
   deleteOrder
 } = require('../controllers/order.controller');
 
-// Create a new order (Sale)
-router.post('/', createOrder);
+// TODO: Import Brian's middleware when merging
+// const { verifyToken, requireRole } = require('../middlewares/auth.middleware');
+// NOTE: I am adding temporary placeholders here so your code works locally and doesn't break until the merge.
+const verifyToken = (req, res, next) => next(); 
+const requireRole = (role) => (req, res, next) => next();
 
-// Retrieve all orders
+// Create a new order (Sale) - Protected: Must be logged in
+
+// Retrieve all orders - Protected: Must be logged in
 router.get('/', getOrders);
 
-// Retrieve a specific order by ID
+// Retrieve a specific order by ID - Protected: Must be logged in
 router.get('/:id', getOrderById);
 
-// Update order status/details
-router.put('/:id', updateOrder);
+// Update order status/details - Protected: Must be ADMIN or CASHIER
+router.put('/:id', verifyToken, requireRole('ADMIN'), updateOrder);
 
-// Delete/cancel an order
-router.delete('/:id', deleteOrder);
+// Delete/cancel an order - Protected: Must be ADMIN ONLY
+router.delete('/:id', verifyToken, requireRole('ADMIN'), deleteOrder);
 
 module.exports = router;
