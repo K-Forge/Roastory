@@ -93,7 +93,16 @@ const getProfile = async (req, res) => {
   }
 };
 
+const getAdminData = async (req, res) => {
+  res.status(200).json({
+    message: 'Welcome to the VIP Admin lounge',
+    adminId: req.user.id,
+    role: req.user.role
+  });
+};
+
 module.exports = {
+  getAdminData,
   getProfile,
   register,
   login
