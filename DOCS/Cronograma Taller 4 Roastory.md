@@ -1,0 +1,116 @@
+Cronograma de Desarrollo: Taller 4 y Entrega 2 - Roastory Contexto
+General y Expectativas Roastory es un sistema web diseñado para la
+gestión integral de una librería-cafetería. Nace para solucionar la
+falta de un sistema digital centralizado que controle inventario, ventas
+y facturas en este tipo de negocios. Para esta entrega (Taller 4), el
+enfoque es netamente Backend. Se espera la construcción de una API
+RESTful robusta usando Node.js, Express y MongoDB, debidamente asegurada
+con JWT y Bcrypt. Módulos del Sistema (Alcance de la API): ? Usuario:
+Registro, inicio de sesión (Auth) y administración de usuarios. ?
+Inventario: CRUD de productos (café, libros, repostería) y control de
+stock. ? Ventas: Registro de ventas y confirmación de compras. ?
+Facturación: Lógica para generar y descargar comprobantes/facturas en
+formato PDF. Encomienda del Taller 4 (Requisitos Estrictos) Para que la
+entrega sea evaluada con éxito (50 puntos en total), el equipo debe
+cumplir obligatoriamente con dos bloques de entregables: 1. Repositorio
+de Código (15 puntos) ? Backend Core: Construir la API que permita el
+CRUD de todos los módulos usando Express y MongoDB. ? Seguridad:
+Implementar el módulo de Autenticación, protegiendo la API con bcrypt
+(hash de contraseñas) y JWT (tokens). ? Gestión de Ramas: Cada
+integrante (Lina, Sebastián, Brian) debe manejar su propia rama. La
+nomenclatura obligatoria es NombreApellido (ej. BrianVargas). ? Commits:
+Se exige un mínimo de 15 commits por cada integrante. (Importante: El
+incumplimiento de este punto o de las ramas anula la nota de esta
+sección dejándola en 0). ? Documentación: El README debe contener los
+usuarios de GitHub de cada persona y su nombre real. 2. Sustentación en
+Video (35 puntos) ? Condiciones: Máximo 15 minutos de duración. Todos
+los integrantes deben participar activamente hablando (no es obligatorio
+mostrar el rostro). Solo se debe enviar el enlace del video
+(YouTube/Drive público). ? Los 8 Puntos a exponer:
+
+1\. Presentación: Título (Roastory), nombre del equipo (K-Forge),
+integrantes, tema abordado y módulos considerados. 2. Tecnologías:
+Explicación del stack backend utilizado. 3. Seguridad: Explicación
+técnica de cómo y dónde se usó JWT y bcrypt. 4. Arquitectura: Recorrido
+por el código fuente describiendo la estructura de carpetas del
+proyecto. 5. Endpoints: Descripción de las peticiones HTTP construidas
+(GET, POST, PUT, DELETE). 6. Pruebas API: Demostración en vivo en
+Postman/Thunder Client de los endpoints (NO se aceptan capturas de
+pantalla). 7. Evidencia BD: Demostración en vivo de los cambios
+reflejados en la base de datos MongoDB. 8. Transparencia IA: Explicación
+honesta de las herramientas de IA utilizadas y su propósito específico
+en el desarrollo. Planificación Diaria
+
+DíaActividad (Origen: T4 / E2 / Roastory)Responsable(s)Entregable
+Esperado (Definition of Done)Lunes (Hoy)Setup del Proyecto y
+Arquitectura Base (T4 / E2)
+
+\- Inicializar repo, crear ramas NombreApellido.
+
+\- Subir archivos de IA y contexto.
+
+\- Configurar servidor Express y conexión a MongoDB Atlas.
+
+\- Definir esquemas/modelos de BD (Usuario, Producto, Venta).Bri: Setup
+Express/Repo.
+
+Sebastián: Setup MongoDB y Modelos.
+
+Lina: \[TAREA YA\] Agregar al repo Contexto.md, AGENTS.md y CLAUDE.md
+(apuntando a AGENTS). Además, Setup README (nombres, usuarios) y
+ramas.Repositorio funcional con conexión exitosa a BD. Archivos base y
+de IA subidos. Ramas creadas y primer commit de cada uno subido.
+MartesDesarrollo Core: Auth e Inventario (T4 / Roastory)
+
+\- Implementar registro y login con Bcrypt y JWT.
+
+\- Implementar CRUD de Inventario (Productos).
+
+\- Implementar CRUD básico de Ventas.Bri: Módulo Usuario y Auth
+(JWT/Bcrypt).
+
+Sebastián: Módulo Inventario (CRUD).
+
+Lina: Módulo Ventas (CRUD inicial).Endpoints de Auth, Inventario y
+Ventas creados y funcionando localmente (mínimo 5 commits por persona
+hoy).MiércolesProtección de Rutas y Facturación (T4 / Roastory)
+
+\- Crear middleware para proteger rutas con JWT.
+
+\- Integrar CRUD de Facturación.
+
+\- Iniciar colección de pruebas en Postman/Thunder Client.Bri:
+Middleware JWT aplicado a rutas.
+
+Sebastián: Módulo Facturación (CRUD/Logica PDF).
+
+Lina: Colección de Postman estructurada con todos los endpoints.Rutas
+protegidas correctamente. Colección de Postman exportable y lista para
+las pruebas.JuevesRevisión de Commits y Guion del Video (T4)
+
+\- Verificar que todos tengan \>15 commits.
+
+\- Pull Requests yBri: Code review y merge.
+
+Sebastián: Poblar BD con datos de prueba reales para el video.
+
+Lina: Guion delRama main actualizada. Cada integrante tiene +15 commits.
+Guion listo con los 8 puntos requeridos para el video. merge a main.
+
+\- Redactar sección de IA en README.
+
+\- Escribir guion del video (asignar partes).video y documentación de IA
+en README.ViernesGrabación del Video Demo (T4)
+
+\- Grabar presentación de máx. 15 mins.Todos (Bri lidera explicación
+técnica; Sebas muestra BD; Lina muestra Postman).Archivo de video crudo
+grabado, con la participación activa de los 3 integrantes.- Demo en vivo
+de Postman y BD (sin capturas).- Explicar código, JWT, bcrypt y uso de
+IA.SábadoEdición y Entrega Final (T4)
+
+\- Revisar que el video cumpla el tiempo y los 8 requisitos.Bri: Edición
+rápida y subida del video.
+
+Lina/Sebastián: Revisión final del repositorio y enlaces.Enlaces
+enviados correctamente. Proyecto finalizado. ¡Domingo libre!- Subir
+video a YouTube/Drive (público).- Enviar enlaces (Repo + Video).

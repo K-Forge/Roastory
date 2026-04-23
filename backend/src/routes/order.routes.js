@@ -8,19 +8,22 @@ const {
   deleteOrder
 } = require('../controllers/order.controller');
 
-// Create a new order (Sale)
-router.post('/', createOrder);
+// Import the real middleware from Brian's implementation
+const { verifyToken, requireRole } = require('../middlewares/auth.middleware');
 
-// Retrieve all orders
-router.get('/', getOrders);
+// Create a new order (Sale) - Protected: Must be logged in
+router.post('/', verifyToken, createOrder);
 
-// Retrieve a specific order by ID
-router.get('/:id', getOrderById);
+// Retrieve all orders - Protected: Must be logged in
+router.get('/', verifyToken, getOrders);
 
-// Update order status/details
-router.put('/:id', updateOrder);
+// Retrieve a specific order by ID - Protected: Must be logged in
+router.get('/:id', verifyToken, getOrderById);
 
-// Delete/cancel an order
-router.delete('/:id', deleteOrder);
+// Update order status/details - Protected: Must be ADMIN or CASHIER
+router.put('/:id', verifyToken, requireRole(['ADMIN', 'CASHIER']), updateOrder);
+
+// Delete/cancel an order - Protected: Must be ADMIN ONLY
+router.delete('/:id', verifyToken, requireRole(['ADMIN']), deleteOrder);
 
 module.exports = router;
