@@ -83,6 +83,24 @@
           },
           "response": []
         },
+        {
+          "name": "Get admin data",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/auth/admin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "admin"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
