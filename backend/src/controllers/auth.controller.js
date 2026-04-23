@@ -75,7 +75,35 @@ const login = async (req, res) => {
   }
 };
 
+const getProfile = async (req, res) => {
+  try {
+    let userDetails = null;
+    try {
+      // Fallback in case Sebastian hasn't pushed User model yet
+      userDetails = await User.findById(req.user.id).select('-password');
+    } catch (dbError) {
+      console.warn("Fallback: User model not ready, using JWT payload");
+    }
+    res.status(200).json({
+      message: 'Access granted to protected route',
+      user: userDetails || req.user
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving profile', error: error.message });
+  }
+};
+
+const getAdminData = async (req, res) => {
+  res.status(200).json({
+    message: 'Welcome to the VIP Admin lounge',
+    adminId: req.user.id,
+    role: req.user.role
+  });
+};
+
 module.exports = {
+  getAdminData,
+  getProfile,
   register,
   login
 };
