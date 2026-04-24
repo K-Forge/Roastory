@@ -64,6 +64,7 @@
             }
           },
           "response": []
+        },
         {
           "name": "Get profile",
           "request": {
@@ -132,7 +133,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"name\": \"Café Americano\",\n    \"description\": \"Café tostado suave\",\n    \"price\": 3.50,\n    \"category\": \"Beverage\",\n    \"stock\": 50\n}",
+              "raw": "{\n    \"name\": \"Café Americano\",\n    \"description\": \"Café tostado suave\",\n    \"price\": 3.50,\n    \"category\": \"COFFEE\",\n    \"stock\": 50\n}",
               "options": {
                 "raw": {
                   "language": "json"
