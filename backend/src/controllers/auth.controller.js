@@ -7,7 +7,7 @@ const User = require('../models/user.model');
 
 const register = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password } = req.body;
 
     if (!email || !password) {
       return res.status(400).json({ message: 'Email and password are required' });
@@ -22,7 +22,7 @@ const register = async (req, res) => {
       name,
       email,
       password: passwordHash,
-      role: role || 'CUSTOMER'
+      role: 'CUSTOMER'
     });
 
     await newUser.save();
