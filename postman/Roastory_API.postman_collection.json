@@ -177,6 +177,38 @@
           "response": []
         },
         {
+          "name": "Update product",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Café Americano Grande\",\n    \"description\": \"Café tostado suave tamaño grande\",\n    \"category\": \"COFFEE\",\n    \"price\": 4.50,\n    \"stock\": 30,\n    \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/products/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
         }
       ]
     },
