@@ -212,10 +212,41 @@
           },
           "response": []
         },
-        }
-      ]
-    },
-    {
+        {
+          "name": "Update stock",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"stock\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/products/:id/stock",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                ":id",
+                "stock"
+              ],
+              "variable": [
+                {
+                  "key": "id"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
       "name": "03 - Sales (Orders)",
       "item": [
         {
