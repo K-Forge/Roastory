@@ -73,7 +73,8 @@ Desarrollado por **K-Forge** como proyecto final de NTD en la Fundacion Universi
 - Contacto del equipo: `kforge.dev@gmail.com`
 <div align="center">
 
-
+| <a href="https://github.com/Landrea28"><img src="https://github.com/Landrea28.png" width="120px;" alt="Lina Bello"/><br /><sub><b>Lina Bello</b></sub><br /><sub>@Landrea28</sub></a> | <a href="https://github.com/13rianVargas"><img src="https://github.com/13rianVargas.png" width="120px;" alt="Brian Vargas"/><br /><sub><b>Brian Vargas</b></sub><br /><sub>@13rianVargas</sub></a> | <a href="https://github.com/sebasanguloc"><img src="https://github.com/sebasanguloc.png" width="120px;" alt="Sebastián Angulo"/><br /><sub><b>Sebastián Angulo</b></sub><br /><sub>@sebasanguloc</sub></a> |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 
 </div>
 
