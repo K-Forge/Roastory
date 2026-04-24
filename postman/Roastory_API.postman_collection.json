@@ -1,9 +1,11 @@
 {
   "info": {
-    "_postman_id": "76161a0f-1558-45a9-bc84-9f79b6329a4f",
+    "_postman_id": "b11f1f99-b16a-4810-ab1b-fc7a870eb24c",
     "name": "Roastory API (NTD Taller 4)",
     "description": "Colección centralizada de endpoints para el proyecto Roastory (Librería-Cafetería).",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53288756",
+    "_collection_link": "https://go.postman.co/collection/53288756-b11f1f99-b16a-4810-ab1b-fc7a870eb24c?source=collection_link"
   },
   "item": [
     {
