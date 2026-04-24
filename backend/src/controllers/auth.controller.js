@@ -5,6 +5,14 @@ const jwt = require('jsonwebtoken');
 // the User schema/model. We import it here assuming he will create it.
 const User = require('../models/user.model');
 
+const getJwtSecret = () => {
+  if (!process.env.JWT_SECRET) {
+    throw new Error('JWT_SECRET is required');
+  }
+
+  return process.env.JWT_SECRET;
+};
+
 const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -62,7 +70,7 @@ const login = async (req, res) => {
       role: user.role
     };
     
-    const secret = process.env.JWT_SECRET || 'fallback_secret_key';
+    const secret = getJwtSecret();
     const token = jwt.sign(payload, secret, { expiresIn: '1d' });
 
     res.status(200).json({ 

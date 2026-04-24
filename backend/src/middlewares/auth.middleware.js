@@ -1,5 +1,13 @@
 const jwt = require('jsonwebtoken');
 
+const getJwtSecret = () => {
+  if (!process.env.JWT_SECRET) {
+    throw new Error('JWT_SECRET is required');
+  }
+
+  return process.env.JWT_SECRET;
+};
+
 /**
  * Middleware to verify JWT token from Authorization header
  */
@@ -18,7 +26,7 @@ const verifyToken = (req, res, next) => {
   }
 
   try {
-    const secret = process.env.JWT_SECRET || 'fallback_secret_key';
+    const secret = getJwtSecret();
     // Verify the token
     const decoded = jwt.verify(token, secret);
     

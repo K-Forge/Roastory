@@ -11,6 +11,10 @@ const userRoutes = require('./routes/user.routes');
 
 const app = express();
 
+if (!process.env.JWT_SECRET) {
+  throw new Error('Missing required environment variable: JWT_SECRET');
+}
+
 connectDB();
 
 // Middlewares
