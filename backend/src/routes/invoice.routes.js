@@ -4,6 +4,7 @@ const {
   createInvoice,
   getInvoices,
   getMyInvoices,
+  getInvoiceById,
 } = require('../controllers/invoice.controller');
 const { verifyToken, requireRole } = require('../middlewares/auth.middleware');
 
@@ -13,5 +14,6 @@ router.get('/', verifyToken, requireRole(['ADMIN']), getInvoices);
 
 router.get('/me', verifyToken, getMyInvoices);
 
+router.get('/:id', verifyToken, getInvoiceById);
 
 module.exports = router;
