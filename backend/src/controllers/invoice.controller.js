@@ -101,8 +101,34 @@ const getMyInvoices = async (req, res) => {
   }
 };
 
+const getInvoiceById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const invoice = await Invoice.findById(id)
+      .populate('customer', 'name email')
+      .populate('order', 'status totalAmount paymentMethod');
+
+    if (!invoice) {
+      return res.status(404).json({ message: 'Factura no encontrada' });
+    }
+
+    const isPrivileged = ['ADMIN', 'CASHIER'].includes(req.user.role);
+    const isOwner = invoice.customer._id.toString() === req.user.id;
+
+    if (!isPrivileged && !isOwner) {
+      return res.status(403).json({ message: 'No tienes permiso para ver esta factura' });
+    }
+
+    res.status(200).json({ invoice });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener la factura', error: error.message });
+  }
+};
+
 module.exports = {
   createInvoice,
   getInvoices,
   getMyInvoices,
+  getInvoiceById,
 };
