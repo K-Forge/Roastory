@@ -157,5 +157,5 @@ module.exports = {
   getInvoices,
   getMyInvoices,
   getInvoiceById,
-  voidInvoice
+  voidInvoice,
 };
