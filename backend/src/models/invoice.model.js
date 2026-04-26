@@ -1,6 +1,27 @@
 const mongoose = require('mongoose');
 
-
+const invoiceItemSchema = new mongoose.Schema({
+  productName: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  quantity: {
+    type: Number,
+    required: true,
+    min: 1
+  },
+  unitPrice: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  subtotal: {
+    type: Number,
+    required: true,
+    min: 0
+  }
+}, { _id: false });
 
 const invoiceSchema = new mongoose.Schema({
   order: {
@@ -52,7 +73,6 @@ const invoiceSchema = new mongoose.Schema({
 }, {
   timestamps: true
 });
-
 
 invoiceSchema.statics.generateInvoiceNumber = async function () {
   const year = new Date().getFullYear();
