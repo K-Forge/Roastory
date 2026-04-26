@@ -70,6 +70,25 @@ const createInvoice = async (req, res) => {
   }
 };
 
+const getInvoices = async (req, res) => {
+  try {
+    const invoices = await Invoice.find()
+      .populate('customer', 'name email')
+      .populate('order', 'status totalAmount')
+      .sort({ issuedAt: -1 });
+
+    res.status(200).json({
+      count: invoices.length,
+      invoices
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener las facturas', error: error.message });
+  }
+};
+
+
+
 module.exports = {
   createInvoice,
+  getInvoices
 };
