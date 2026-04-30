@@ -1,97 +1,182 @@
 # Roastory · Agent Context
 
-> Operational context and strict rules for AI agents, LLMs, and automated tools interacting with this repository.
+> Operational context and rules for AI agents working in this repository.
+
+---
+
+## K-Forge Ecosystem
+
+K-Forge is a software development club at Fundación Universitaria Konrad Lorenz (FUKL), Bogotá, founded by Brian Vargas (@13rianVargas). The club builds real-world software products for the university and community.
+
+| Project | Repo | Description |
+|---------|------|-------------|
+| K-Forge Website | `K-Forge/` | Public landing page (Angular, Vercel) |
+| KApp | `KApp/` | University management platform (Spring Boot microservices) |
+| TiendaQ | `TiendaQ/` | University e-commerce system (Spring Boot + Angular) |
+| **Roastory** | `Roastory/` | Library-cafe management system — you are here |
 
 ---
 
 ## Project Overview
 
-**Roastory** is a web-based library-cafe management system developed by the **K-Forge** team as the final project for the "Nuevas Tecnologias de Desarrollo" (NTD) course at Fundacion Universitaria Konrad Lorenz. 
+**Roastory** is a web-based library-cafe management system developed by the K-Forge team as the final project for the "Nuevas Tecnologías de Desarrollo" (NTD) course at FUKL. It handles inventory, point of sale, customer management, billing (PDF invoices), and user authentication.
 
-- **Phase:** Active Development (Taller 4) — Backend API implementation phase.
-- **Language Scope:** All documentation, codebase (variables, classes, comments), commit messages, and agent instructions MUST be in **English**. (User-facing UI may remain in Spanish if required by the professor, but all internal work is English).
+The name combines "Roast" (coffee roasting) and "Story" (books), reflecting the library-cafe concept.
+
+**Project board:** https://github.com/orgs/K-Forge/projects/16
+
+---
 
 ## Tech Stack
 
-> **Note:** The core stack has been defined. Agents MUST verify configuration files (e.g., `package.json`, `pnpm-lock.yaml`, `angular.json`) before executing commands.
+| Layer | Technology |
+|-------|-----------|
+| Backend runtime | Node.js + Express 5 |
+| Auth | JWT (`jsonwebtoken`) + bcrypt |
+| Database | MongoDB Atlas (`mongoose` 9.5) |
+| PDF generation | pdfkit |
+| Package manager | pnpm |
+| Dev server | nodemon |
+| Frontend | Angular (not yet implemented) |
+| Containers | Docker (planned for deployment) |
 
-- **Frontend:** Angular
-- **Backend:** Node.js with Express
-- **Database:** MongoDB (Atlas)
-- **Package Manager:** pnpm
-- **Containers:** Docker (Expected for future deployment phases)
+---
 
-## Core Modules
-
-| Module                 | Description                                                  |
-| ---------------------- | ------------------------------------------------------------ |
-| **Product Catalog**    | Books, beverages, and food with advanced search and filters. |
-| **Inventory**          | Stock control and automated reorder alerts.                  |
-| **Point of Sale (POS)**| Sales recording, cart management, and totals calculation.    |
-| **Customer Mgmt**      | Customer registry and purchase history tracking.             |
-| **Reports**            | Sales by period and best-selling products analytics.         |
-| **Auth & Users**       | JWT and Bcrypt based authentication and user management.     |
-| **Billing**            | Logic for generating and downloading PDF invoices.           |
-
-## Anticipated Repository Structure
+## Repository Structure
 
 ```text
 Roastory/
-├── backend/                 # Node.js + Express REST API (To be initialized)
-├── frontend/                # Angular application code (To be initialized)
-├── database/                # MongoDB scripts and seed data (To be initialized)
-├── DOCUMENTACION/           # Technical documentation, schedules, and summaries
+├── backend/
+│   ├── src/
+│   │   ├── config/          # DB connection, environment config
+│   │   ├── controllers/     # Route handlers
+│   │   ├── middlewares/     # Auth middleware (JWT verification)
+│   │   ├── models/          # Mongoose schemas
+│   │   ├── routes/          # Express router definitions
+│   │   └── seed/
+│   │       ├── seed.js      # Populate DB with test data
+│   │       └── dropDB.js    # Drop all collections
+│   ├── server.js            # Entry point
+│   ├── package.json
+│   └── .env.example         # Environment variable template
+├── frontend/                # Not yet implemented
+├── postman/                 # API collection
+├── DOCS/                    # Course documentation
 │   ├── Cronograma Taller 4 Roastory.txt
 │   └── RoastoryResumenEjecutivo_Entrega1.txt
-├── assets/                  # Images, logos, and UI placeholders
-│   ├── KForge-Yellow-Logo.png
-│   └── project-banner.svg
+├── assets/
+├── Contexto.md              # Project context, team roles, assignments
 ├── CONTRIBUTING.md
 ├── CONTRIBUTORS.md
-├── Contexto.md              # Project context, roles, and Taller 4 assignments
-├── AGENTS.md                # AI Agents context and strict rules
-├── CLAUDE.md                # Agent instruction pointer
-├── LICENSE                  # Project license
-└── README.md                # Main project documentation
+└── README.md
 ```
+
+---
+
+## Dev Commands
+
+```bash
+# Install dependencies
+cd backend && pnpm install
+
+# Dev server (nodemon auto-reload)
+pnpm dev                     # → port 3000
+
+# Production start
+pnpm start
+
+# Seed database with test data
+pnpm seed
+
+# Drop all collections
+pnpm drop
+```
+
+Required env vars (copy from `.env.example`):
+```
+PORT=3000
+MONGODB_URI=<Atlas connection string>
+JWT_SECRET=<secret>
+```
+
+---
+
+## Core Modules
+
+| Module | Description |
+|--------|-------------|
+| User / Auth | Registration, login (JWT + bcrypt), route protection middleware |
+| Inventory | CRUD for products (books, beverages, food) and stock control |
+| Sales | Sales recording, cart, order management |
+| Billing | PDF invoice generation and download |
+| Customers | Customer registry and purchase history |
+| Reports | Sales analytics by period and best-selling products |
+
+---
 
 ## Conventions
 
-- **Commits:** `type: message in english` (e.g., `feat: add product catalog search`, `fix: resolve inventory calculation bug`). Follow Conventional Commits strictly. Read CONTRIBUTING.md
-- **Branches:** Git Flow (`main`, `develop`, `feature/*`, `chore/*`, `bugfix/*`, `hotfix/*`) and `NameSurname` format for current assignments.
-- **Language Policy:** 
-  - **Code, Variables, Comments:** English ONLY.
-  - **Documentation (README, Contexto.md, etc.):** English ONLY.
-  - **Commit Messages:** English ONLY.
+### Code (English only)
 
-## Versioning
+- All code, variables, comments, commit messages, and documentation must be in English.
+- User-facing UI strings may remain in Spanish if required by the professor.
+- REST controllers in `src/controllers/`. Routes in `src/routes/`. Mongoose schemas in `src/models/`.
 
-Format: `MAJOR.MINOR.PATCH`.
-- `MAJOR` for large refactors, architectural shifts, or production releases.
-- `MINOR` for new backward-compatible features (e.g., adding the Reports module).
-- `PATCH` for bug fixes.
+### Security
 
-## Database Guidelines (Anticipated)
+- Passwords hashed with bcrypt. No plain-text secrets in code.
+- JWT used for session management. Protected routes use the auth middleware.
+- Never commit `.env` — use `.env.example` as the template.
+- Never hardcode credentials.
 
-- **Core Entities:** `User`, `Customer`, `Product` (inheritance for `Book`, `Beverage`, `Food`), `Inventory`, `Order`, `OrderDetail`.
-- **Enums expected:** `Role` (ADMIN, CASHIER, INVENTORY_MANAGER), `OrderStatus` (PENDING, COMPLETED, CANCELLED).
-- **Security:** Passwords must be hashed using bcrypt. No sensitive data stored in plain text. JWT used for session management.
+### Git
 
-## High-Priority Tasks (Current Phase - Taller 4)
+- **Commits:** Conventional Commits, English, lowercase, no scope, no final period.
+  ```
+  feat: add user authentication module
+  fix: resolve pdf generation memory leak
+  chore: update mongoose to 9.5
+  ```
+- **Branches:** Git Flow — `main`, `develop`, `feature/*`, `bugfix/*`, `hotfix/*`.
+- Teammate work discipline: branch off teammates' latest work. Never overwrite or skip another member's progress.
 
-1. Initialize project scaffolding (Angular Frontend, Express Backend, MongoDB Database) using **pnpm**.
-2. Implement User Auth module (JWT/Bcrypt) and secure routes with middleware.
-3. Implement Inventory (CRUD) and Sales (CRUD) modules.
-4. Implement Billing module with PDF generation logic.
-5. Setup Postman collections and populate the database with real test data.
+### Versioning
+
+SemVer `MAJOR.MINOR.PATCH`. Release cycle: alpha → beta → stable.
+
+---
+
+## Team Roles (Taller 4 Assignment)
+
+| Member | Role | Responsibilities |
+|--------|------|-----------------|
+| Brian Vargas | Backend Dev | Server setup, Auth module (JWT/bcrypt), middleware, code review, merges |
+| Sebastián Angulo | DBA | MongoDB Atlas setup, schemas, Inventory module, Billing module, seed data |
+| Lina Bello | Frontend Dev | Sales module, Postman collection, documentation, README |
+
+---
+
+## Current State
+
+- Backend scaffolded with Express 5 + pnpm.
+- Auth module implemented: user registration and login with JWT + bcrypt.
+- Middleware for protected routes implemented.
+- Backend structure: `config/`, `controllers/`, `middlewares/`, `models/`, `routes/`, `seed/`.
+- Inventory, Billing, Sales modules: in progress (see team assignments).
+- Frontend: not yet started.
+- Postman collection: in progress.
+- Docker: not yet configured.
+
+---
 
 ## AI Agent Instructions
 
-- **Branch Syncing & Respecting Teammates' Work:** NEVER overwrite or skip another teammate's work. Before starting new features or making a push, ALWAYS branch off the latest teammate's branch or pull their changes if working on a shared branch, so their progress is preserved and accumulated.
-- **Strict Task Boundaries:** NEVER write code, templates, or even commented-out stubs for tasks assigned to other team members. Let them figure out their own implementations and setup.
-- **Review Before Commit:** ALWAYS present the implementation plan and the written code to the user for review BEFORE executing a git commit. Never commit automatically without explicit user approval.
-- **Do NOT modify:** `.env` files (contains secrets). Always use `.env.example` for templates.
-- **Do NOT assume:** Do not assume standard test commands or build tools. Always read the directory configuration files first.
-- **Communication:** Never use emojis in technical documents (e.g., `.md` files). Keep structures professional and formal.
-- **Scope Limitation:** Limit changes strictly to the requested scope. Do not refactor unrelated code unless explicitly asked by the user.
-- **Knowledge Sync:** Always read `README.md`, `Contexto.md` and `CONTRIBUTING.md` to understand current progress and formatting rules before suggesting changes.
+- **Language:** All code, variables, comments, and documentation in English. No exceptions.
+- **Strict task scope:** Never write code, templates, or stubs for tasks assigned to other team members.
+- **Teammate branches:** Always branch off the latest teammate work. Never overwrite their progress.
+- **Never commit** `.env`. Use `.env.example` for templates.
+- **No automatic commits.** Present implementation plan and code for review before any `git commit`.
+- **Do not assume** build tools or test commands. Read `package.json` first.
+- **No emojis** in technical markdown documents.
+- **Scope discipline:** Limit changes strictly to the requested scope. Do not refactor unrelated code.
+- **Before changes:** Read `README.md`, `Contexto.md`, and `CONTRIBUTING.md` first.
