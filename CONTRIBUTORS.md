@@ -1,27 +1,36 @@
+<a id="top"></a>
+
 # Contribuyentes de Roastory
 
 Desarrollo realizado como parte del club de desarrollo **K-Forge** en la Fundacion Universitaria Konrad Lorenz.
 
----
+<br/>
 
-A continuacion se listan las personas que han contribuido activamente en el desarrollo de **Roastory**:
-
-## Equipo de Desarrollo de Roastory
+## ◈ Equipo de Desarrollo
 
 <div align="center">
 
-| | Nombre | GitHub |
-|---|---|---|
-| <a href="https://github.com/Landrea28"><img src="https://github.com/Landrea28.png" width="40" style="border-radius:50%"/></a> | **Lina Bello** | [@Landrea28](https://github.com/Landrea28) |
-| <a href="https://github.com/13rianVargas"><img src="https://github.com/13rianVargas.png" width="40" style="border-radius:50%"/></a> | **Brian Vargas** | [@13rianVargas](https://github.com/13rianVargas) |
-| <a href="https://github.com/sebasanguloc"><img src="https://github.com/sebasanguloc.png" width="40" style="border-radius:50%"/></a> | **Sebastian Angulo** | [@sebasanguloc](https://github.com/sebasanguloc) |
+| <a href="https://github.com/13rianVargas"><img src="https://github.com/13rianVargas.png" width="120px;" alt="Brian Vargas"/><br /><sub><b>Brian Vargas</b></sub><br /><sub>@13rianVargas</sub><br /><sub><img src="https://img.shields.io/badge/Backend-8B5CF6?style=flat-square" alt="Backend"/></sub></a> | <a href="https://github.com/sebasanguloc"><img src="https://github.com/sebasanguloc.png" width="120px;" alt="Sebastian Angulo"/><br /><sub><b>Sebastian Angulo</b></sub><br /><sub>@sebasanguloc</sub><br /><sub><img src="https://img.shields.io/badge/DBA-A78BFA?style=flat-square" alt="DBA"/></sub></a> | <a href="https://github.com/Landrea28"><img src="https://github.com/Landrea28.png" width="120px;" alt="Lina Bello"/><br /><sub><b>Lina Bello</b></sub><br /><sub>@Landrea28</sub><br /><sub><img src="https://img.shields.io/badge/Frontend-A78BFA?style=flat-square" alt="Frontend"/></sub></a> |
+| :---: | :---: | :---: |
 
 </div>
 
+<br/>
+
 ---
 
-## Te interesa unirte?
-
-K-Forge esta abierto a estudiantes activos de la universidad que quieran participar en proyectos por pasion.
-Si te interesa unirte al equipo de Roastory, escribenos a **kforge.dev@gmail.com**
-(puedes usar un asunto como: `[Unirme]`) o preguntanos por los horarios en los que nos reunimos en la universidad.
+<div align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&height=100&color=0:000000,100:EAB308&section=footer" width="100%"/>
+  <br/>
+  <a href="https://github.com/K-Forge">
+    <img src="https://img.shields.io/badge/GitHub-K--Forge-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub K-Forge"/>
+  </a>
+  &nbsp;
+  <a href="mailto:kforge.dev@gmail.com">
+    <img src="https://img.shields.io/badge/Unirme-kforge.dev-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Unirme"/>
+  </a>
+  <br/><br/>
+  <a href="#top">
+    <img src="https://img.shields.io/badge/%E2%96%B2_Volver_arriba-EAB308?style=flat-square" alt="Volver arriba"/>
+  </a>
+</div>
