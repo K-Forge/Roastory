@@ -1,19 +1,15 @@
 <a id="top"></a>
 
-<div align="center">
-  <table style="border: none; background-color: transparent;">
-    <tr style="border: none; background-color: transparent;">
-      <td align="center" width="20%" style="border: none;">
-        <!-- ESPACIO RESERVADO PARA LOGO OFICIAL K-FORGE -->
-        <img src="./assets/KForge-Yellow-Logo.png" alt="K-Forge Oficial Logo" width="120" style="border-radius: 10px;" />
-      </td>
-      <td align="center" width="80%" style="border: none;">
-        <!-- BANNER CIBERNETICO DEL PROYECTO -->
-        <img src="./assets/project-banner.svg" alt="Banner del Proyecto" width="100%" />
-      </td>
-    </tr>
-  </table>
-</div>
+<table width="100%" style="border: none; background-color: transparent;">
+  <tr style="border: none; background-color: transparent;">
+    <td align="center" width="20%" style="border: none; padding: 0;">
+      <img src="./assets/KForge-Yellow-Logo.png" alt="K-Forge Logo" width="100%" style="max-width: 180px; border-radius: 10px;" />
+    </td>
+    <td align="center" width="80%" style="border: none; padding: 0;">
+      <img src="./assets/project-banner.svg" alt="Roastory Banner" width="100%" />
+    </td>
+  </tr>
+</table>
 
 <p align="center"><strong>Sistema web para la gestion de una libreria-cafeteria en la Fundacion Universitaria Konrad Lorenz.</strong></p>
 
