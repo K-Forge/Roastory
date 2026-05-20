@@ -10,6 +10,7 @@ const {
 } = require('../controllers/invoice.controller');
 const { verifyToken, requireRole } = require('../middlewares/auth.middleware');
 
+<<<<<<< HEAD
 // Crear factura a partir de una orden — ADMIN o CASHIER
 router.post('/', verifyToken, requireRole(['ADMIN', 'CASHIER']), createInvoice);
 
@@ -27,6 +28,18 @@ router.get('/:id', verifyToken, getInvoiceById);
 router.get('/:id/pdf', verifyToken, downloadInvoicePDF);
 
 // Anular una factura — solo ADMIN
+=======
+router.post('/', verifyToken, requireRole(['ADMIN', 'CASHIER']), createInvoice);
+
+router.get('/', verifyToken, requireRole(['ADMIN']), getInvoices);
+
+router.get('/me', verifyToken, getMyInvoices);
+
+router.get('/:id', verifyToken, getInvoiceById);
+
+router.get('/:id/pdf', verifyToken, downloadInvoicePDF);
+
+>>>>>>> c1e843c777ac90c60a9f9375eff26a3aa898376d
 router.patch('/:id/void', verifyToken, requireRole(['ADMIN']), voidInvoice);
 
 module.exports = router;
