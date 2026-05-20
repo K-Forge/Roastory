@@ -2,113 +2,177 @@
   "info": {
     "_postman_id": "b11f1f99-b16a-4810-ab1b-fc7a870eb24c",
     "name": "Roastory API (NTD Taller 4)",
-    "description": "Colección centralizada de endpoints para el proyecto Roastory (Librería-Cafetería).",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "53288756",
-    "_collection_link": "https://go.postman.co/collection/53288756-b11f1f99-b16a-4810-ab1b-fc7a870eb24c?source=collection_link"
+    "description": "Colección centralizada de endpoints para el proyecto Roastory (Librería-Cafetería).\n\n**Cómo usar:**\n1. Ejecuta 'Login User' — el token se guarda automáticamente en la variable `token`.\n2. Todos los endpoints protegidos lo usan via `Authorization: Bearer {{token}}`.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "01 - Auth & Users",
+      "name": "01 - Auth",
       "item": [
         {
           "name": "Register User",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"name\": \"Administrador General\",\n    \"email\": \"admin@roastory.com\",\n    \"password\": \"123456\",\n    \"role\": \"ADMIN\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "raw": "{\n    \"name\": \"Administrador General\",\n    \"email\": \"admin@roastory.com\",\n    \"password\": \"Admin123!\"\n}",
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
               "raw": "{{base_url}}/api/auth/register",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "register"
-              ]
-            }
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "register"]
+            },
+            "description": "Registro público. El rol por defecto es CUSTOMER. Para cambiar el rol usa 'Update User Role' como ADMIN."
           },
           "response": []
         },
         {
           "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();",
+                  "if (response.token) {",
+                  "    pm.collectionVariables.set('token', response.token);",
+                  "    console.log('Token guardado correctamente.');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"email\": \"admin@roastory.com\",\n    \"password\": \"123456\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "raw": "{\n    \"email\": \"admin@roastory.com\",\n    \"password\": \"Admin123!\"\n}",
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
               "raw": "{{base_url}}/api/auth/login",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "login"
-              ]
-            }
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Al hacer login exitoso, el token JWT se guarda automáticamente en la variable `token` de la colección."
           },
           "response": []
         },
         {
-          "name": "Get profile",
+          "name": "Get My Profile",
           "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
             "method": "GET",
             "header": [],
             "url": {
               "raw": "{{base_url}}/api/auth/me",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "me"
-              ]
-            }
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "me"]
+            },
+            "description": "Devuelve el perfil del usuario autenticado. Requiere JWT."
           },
           "response": []
         },
         {
-          "name": "Get admin data",
+          "name": "Get Admin Data",
           "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
             "method": "GET",
             "header": [],
             "url": {
               "raw": "{{base_url}}/api/auth/admin",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "admin"
-              ]
-            }
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "admin"]
+            },
+            "description": "Solo accesible con rol ADMIN."
           },
           "response": []
         }
       ]
     },
     {
-      "name": "02 - Inventory (Products)",
+      "name": "02 - User Management (ADMIN)",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/users?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            },
+            "description": "Lista paginada de todos los usuarios. Solo ADMIN."
+          },
+          "response": []
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/users/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", ":id"],
+              "variable": [{ "key": "id", "value": "", "description": "MongoDB ObjectId del usuario" }]
+            },
+            "description": "Solo ADMIN."
+          },
+          "response": []
+        },
+        {
+          "name": "Update User Role",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"role\": \"CASHIER\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/:id/role",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", ":id", "role"],
+              "variable": [{ "key": "id", "value": "", "description": "MongoDB ObjectId del usuario" }]
+            },
+            "description": "Roles disponibles: ADMIN, INVENTORY_MANAGER, CASHIER, CUSTOMER. Solo ADMIN."
+          },
+          "response": []
+        },
+        {
+          "name": "Deactivate User",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/users/:id/deactivate",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", ":id", "deactivate"],
+              "variable": [{ "key": "id", "value": "", "description": "MongoDB ObjectId del usuario" }]
+            },
+            "description": "Desactiva un usuario (isActive: false). No lo elimina. Solo ADMIN."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "03 - Inventory (Products)",
       "item": [
         {
           "name": "Get All Products",
@@ -117,287 +181,322 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/api/products",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "products"
+              "host": ["{{base_url}}"],
+              "path": ["api", "products"],
+              "query": [
+                { "key": "category", "value": "COFFEE", "disabled": true },
+                { "key": "active", "value": "true", "disabled": true }
               ]
-            }
+            },
+            "description": "Público. Filtros opcionales: ?category=COFFEE|BOOK|PASTRY|OTHER y ?active=true|false"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/products/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            },
+            "description": "Público."
           },
           "response": []
         },
         {
           "name": "Create Product",
           "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
             "method": "POST",
-            "header": [],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"name\": \"Café Americano\",\n    \"description\": \"Café tostado suave\",\n    \"price\": 3.50,\n    \"category\": \"COFFEE\",\n    \"stock\": 50\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "raw": "{\n    \"name\": \"Café Americano\",\n    \"description\": \"Café negro tostado suave, ideal para las mañanas\",\n    \"category\": \"COFFEE\",\n    \"price\": 5500,\n    \"stock\": 50,\n    \"sku\": \"CAF-001\"\n}",
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
               "raw": "{{base_url}}/api/products",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "products"
-              ]
-            }
+              "host": ["{{base_url}}"],
+              "path": ["api", "products"]
+            },
+            "description": "Requiere rol ADMIN o INVENTORY_MANAGER."
           },
           "response": []
         },
         {
-          "name": "Get a product by ID",
+          "name": "Update Product",
           "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/api/products/:id",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "products",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Update product",
-          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
             "method": "PUT",
-            "header": [],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"name\": \"Café Americano Grande\",\n    \"description\": \"Café tostado suave tamaño grande\",\n    \"category\": \"COFFEE\",\n    \"price\": 4.50,\n    \"stock\": 30,\n    \"isActive\": true\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "raw": "{\n    \"name\": \"Café Americano Grande\",\n    \"price\": 6500,\n    \"stock\": 45,\n    \"isActive\": true\n}",
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
               "raw": "{{base_url}}/api/products/:id",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "products",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id"
-                }
-              ]
-            }
+              "host": ["{{base_url}}"],
+              "path": ["api", "products", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            },
+            "description": "Requiere rol ADMIN o INVENTORY_MANAGER."
           },
           "response": []
         },
         {
-          "name": "Update stock",
+          "name": "Update Stock",
           "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
             "method": "PATCH",
-            "header": [],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"stock\": 100\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "raw": "{\n    \"quantity\": 20\n}",
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
               "raw": "{{base_url}}/api/products/:id/stock",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "products",
-                ":id",
-                "stock"
-              ],
-              "variable": [
-                {
-                  "key": "id"
-                }
-              ]
-            }
+              "host": ["{{base_url}}"],
+              "path": ["api", "products", ":id", "stock"],
+              "variable": [{ "key": "id", "value": "" }]
+            },
+            "description": "El campo es `quantity` (delta). Positivo suma stock, negativo resta. Requiere ADMIN o INVENTORY_MANAGER."
           },
           "response": []
         },
         {
-          "name": "Delete product",
+          "name": "Delete Product",
           "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
             "method": "DELETE",
             "header": [],
             "url": {
               "raw": "{{base_url}}/api/products/:id",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "products",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id"
-                }
-              ]
-            }
+              "host": ["{{base_url}}"],
+              "path": ["api", "products", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            },
+            "description": "Requiere rol ADMIN o INVENTORY_MANAGER."
           },
           "response": []
         }
       ]
     },
     {
-      "name": "03 - Sales (Orders)",
+      "name": "04 - Sales (Orders)",
       "item": [
         {
-          "name": "Create Order (Sale)",
+          "name": "Create Order",
           "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
             "method": "POST",
-            "header": [],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"customer\": \"65c3b9...\",\n    \"items\": [\n        {\n            \"product\": \"65c3bA...\",\n            \"quantity\": 2,\n            \"price\": 3.50\n        }\n    ],\n    \"totalAmount\": 7.00,\n    \"paymentMethod\": \"CASH\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "raw": "{\n    \"customer\": \"REEMPLAZA_CON_ID_DE_USUARIO\",\n    \"items\": [\n        {\n            \"product\": \"REEMPLAZA_CON_ID_DE_PRODUCTO\",\n            \"quantity\": 2,\n            \"price\": 5500\n        }\n    ],\n    \"totalAmount\": 11000,\n    \"paymentMethod\": \"CASH\"\n}",
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
               "raw": "{{base_url}}/api/orders",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "orders"
-              ]
-            }
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders"]
+            },
+            "description": "Requiere JWT. El estado inicial es PENDING."
           },
           "response": []
         },
         {
           "name": "Get All Orders",
           "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
             "method": "GET",
             "header": [],
             "url": {
               "raw": "{{base_url}}/api/orders",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "orders"
-              ]
-            }
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders"]
+            },
+            "description": "Requiere JWT."
           },
           "response": []
         },
         {
-          "name": "Get order by ID",
+          "name": "Get Order by ID",
           "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
             "method": "GET",
             "header": [],
             "url": {
               "raw": "{{base_url}}/api/orders/:id",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "orders",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id"
-                }
-              ]
-            }
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            },
+            "description": "Requiere JWT."
           },
           "response": []
         },
         {
-          "name": "Update sales status",
+          "name": "Update Order Status",
           "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
             "method": "PUT",
-            "header": [],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
               "raw": "{\n    \"status\": \"COMPLETED\",\n    \"paymentMethod\": \"CREDIT_CARD\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
               "raw": "{{base_url}}/api/orders/:id",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "orders",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id"
-                }
-              ]
-            }
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            },
+            "description": "Estados: PENDING, COMPLETED, CANCELLED. Requiere rol ADMIN o CASHIER."
           },
           "response": []
         },
         {
-          "name": "Delete order",
+          "name": "Delete Order",
           "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
             "method": "DELETE",
             "header": [],
             "url": {
               "raw": "{{base_url}}/api/orders/:id",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "api",
-                "orders",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id"
-                }
-              ]
-            }
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            },
+            "description": "Solo ADMIN."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "05 - Invoices (Billing)",
+      "item": [
+        {
+          "name": "Create Invoice",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"orderId\": \"REEMPLAZA_CON_ID_DE_ORDEN_COMPLETED\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/invoices",
+              "host": ["{{base_url}}"],
+              "path": ["api", "invoices"]
+            },
+            "description": "Genera una factura a partir de una orden con status COMPLETED. Requiere rol ADMIN o CASHIER."
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Invoices",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/invoices",
+              "host": ["{{base_url}}"],
+              "path": ["api", "invoices"]
+            },
+            "description": "Lista todas las facturas. Solo ADMIN."
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Invoices",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/invoices/me",
+              "host": ["{{base_url}}"],
+              "path": ["api", "invoices", "me"]
+            },
+            "description": "Devuelve las facturas del usuario autenticado. Cualquier rol logueado."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Invoice by ID",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/invoices/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "invoices", ":id"],
+              "variable": [{ "key": "id", "value": "" }]
+            },
+            "description": "Accesible por ADMIN, CASHIER, o el cliente dueño de la factura."
+          },
+          "response": []
+        },
+        {
+          "name": "Download Invoice PDF",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/invoices/:id/pdf",
+              "host": ["{{base_url}}"],
+              "path": ["api", "invoices", ":id", "pdf"],
+              "variable": [{ "key": "id", "value": "" }]
+            },
+            "description": "Descarga el PDF de la factura. Por ahora responde 501 hasta implementar pdfkit."
+          },
+          "response": []
+        },
+        {
+          "name": "Void Invoice",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/invoices/:id/void",
+              "host": ["{{base_url}}"],
+              "path": ["api", "invoices", ":id", "void"],
+              "variable": [{ "key": "id", "value": "" }]
+            },
+            "description": "Anula la factura (status → VOIDED). No la elimina. Solo ADMIN."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "00 - Health Check",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/health",
+              "host": ["{{base_url}}"],
+              "path": ["api", "health"]
+            },
+            "description": "Verifica que el servidor esté corriendo."
           },
           "response": []
         }
@@ -407,7 +506,14 @@
   "variable": [
     {
       "key": "base_url",
-      "value": "http://localhost:3000"
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string",
+      "description": "Se llena automáticamente al ejecutar Login User"
     }
   ]
 }

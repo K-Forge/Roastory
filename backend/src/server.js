@@ -8,6 +8,7 @@ const orderRoutes = require('./routes/order.routes');
 const authRoutes = require('./routes/auth.routes');
 const productRoutes = require('./routes/product.routes');
 const userRoutes = require('./routes/user.routes');
+const invoiceRoutes = require('./routes/invoice.routes');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/invoices', invoiceRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
