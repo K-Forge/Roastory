@@ -1,0 +1,76 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  height: 60px;
+  background-color: var(--p-surface-0, #ffffff);
+  border-bottom: 1px solid var(--p-surface-200, #e2e8f0);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--p-primary-500, #6366f1);
+}
+
+.brand-icon {
+  font-size: 1.3rem;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.navbar-links a {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--p-surface-600, #475569);
+  font-size: 0.92rem;
+  transition: background 0.15s, color 0.15s;
+}
+
+.navbar-links a:hover {
+  background-color: var(--p-surface-100, #f1f5f9);
+  color: var(--p-surface-900, #0f172a);
+}
+
+.navbar-links a.active {
+  background-color: var(--p-primary-50, #eef2ff);
+  color: var(--p-primary-600, #4f46e5);
+  font-weight: 600;
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-name {
+  font-size: 0.88rem;
+  color: var(--p-surface-500, #64748b);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+main {
+  padding: 1.5rem;
+}
+
+main.with-navbar {
+  min-height: calc(100vh - 60px);
+}

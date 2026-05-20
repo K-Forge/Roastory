@@ -5,7 +5,6 @@ const PDFDocument = require('pdfkit');
 const TAX_RATE = 0.19; // IVA Colombia
 
 // POST /api/invoices — Generar una factura a partir de una orden completada
-const TAX_RATE = 0.19;
 
 const createInvoice = async (req, res) => {
   try {
@@ -201,7 +200,6 @@ const downloadInvoicePDF = async (req, res) => {
     doc.pipe(res);
 
     // ── ENCABEZADO ──────────────────────────────────────────────────────────
-    doc.pipe(res);
 
     doc
       .fontSize(28)
@@ -247,10 +245,6 @@ const downloadInvoicePDF = async (req, res) => {
     doc.moveDown(1);
 
     // ── TABLA DE ÍTEMS ──────────────────────────────────────────────────────
-    doc.font('Helvetica-Bold').fontSize(10).text('DETALLE DE PRODUCTOS');
-    doc.moveDown(0.5);
-
-    // Encabezado de la tabla
     doc.font('Helvetica-Bold').fontSize(10).text('DETALLE DE PRODUCTOS');
     doc.moveDown(0.5);
 
