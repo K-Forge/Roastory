@@ -1,0 +1,37 @@
+@if (isLoggedIn()) {
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <span class="brand-icon pi pi-book"></span>
+      <span class="brand-name">Roastory</span>
+    </div>
+
+    <div class="navbar-links">
+      <a routerLink="/dashboard" routerLinkActive="active">
+        <i class="pi pi-home"></i> Inicio
+      </a>
+      <a routerLink="/products" routerLinkActive="active">
+        <i class="pi pi-box"></i> Productos
+      </a>
+      <a routerLink="/invoices" routerLinkActive="active">
+        <i class="pi pi-receipt"></i> Facturas
+      </a>
+    </div>
+
+    <div class="navbar-user">
+      <span class="user-name">
+        <i class="pi pi-user"></i> {{ userName() }}
+      </span>
+      <p-button
+        label="Cerrar sesión"
+        icon="pi pi-sign-out"
+        severity="secondary"
+        size="small"
+        (onClick)="logout()"
+      />
+    </div>
+  </nav>
+}
+
+<main [class.with-navbar]="isLoggedIn()">
+  <router-outlet />
+</main>
