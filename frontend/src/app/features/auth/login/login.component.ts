@@ -1,5 +1,5 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
@@ -12,6 +12,7 @@ import { AuthService } from '../../../core/services/auth.service';
   selector: 'app-login',
   imports: [
     ReactiveFormsModule,
+    RouterLink,
     CardModule,
     InputTextModule,
     PasswordModule,

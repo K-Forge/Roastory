@@ -3,7 +3,9 @@
 
 <div class="page-header">
   <h2><i class="pi pi-box"></i> Inventario de Productos</h2>
-  <p-button label="Nuevo producto" icon="pi pi-plus" (onClick)="openNew()" />
+  @if (canManage()) {
+    <p-button label="Nuevo producto" icon="pi pi-plus" (onClick)="openNew()" />
+  }
 </div>
 
 <div class="filters">
@@ -77,24 +79,26 @@
         />
       </td>
       <td class="actions">
-        <p-button
-          icon="pi pi-pencil"
-          severity="secondary"
-          size="small"
-          [rounded]="true"
-          [text]="true"
-          (onClick)="openEdit(product)"
-          pTooltip="Editar"
-        />
-        <p-button
-          icon="pi pi-trash"
-          severity="danger"
-          size="small"
-          [rounded]="true"
-          [text]="true"
-          (onClick)="confirmDelete(product)"
-          pTooltip="Eliminar"
-        />
+        @if (canManage()) {
+          <p-button
+            icon="pi pi-pencil"
+            severity="secondary"
+            size="small"
+            [rounded]="true"
+            [text]="true"
+            (onClick)="openEdit(product)"
+            pTooltip="Editar"
+          />
+          <p-button
+            icon="pi pi-trash"
+            severity="danger"
+            size="small"
+            [rounded]="true"
+            [text]="true"
+            (onClick)="confirmDelete(product)"
+            pTooltip="Eliminar"
+          />
+        }
       </td>
     </tr>
   </ng-template>

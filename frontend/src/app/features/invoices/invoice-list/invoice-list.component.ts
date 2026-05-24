@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
@@ -8,6 +8,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { InvoiceService } from '../../../core/services/invoice.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { Invoice, InvoiceStatus, PaymentMethod } from '../../../shared/models/invoice.model';
 
 @Component({
@@ -26,6 +27,7 @@ import { Invoice, InvoiceStatus, PaymentMethod } from '../../../shared/models/in
 })
 export class InvoiceListComponent implements OnInit {
   private invoiceService = inject(InvoiceService);
+  private authService = inject(AuthService);
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
   private router = inject(Router);
@@ -33,13 +35,19 @@ export class InvoiceListComponent implements OnInit {
   invoices = signal<Invoice[]>([]);
   loading = signal(false);
 
+  readonly isAdmin = computed(() => this.authService.currentRole() === 'ADMIN');
+
   ngOnInit(): void {
     this.loadInvoices();
   }
 
   loadInvoices(): void {
     this.loading.set(true);
-    this.invoiceService.getAll().subscribe({
+    const invoices$ = this.isAdmin()
+      ? this.invoiceService.getAll()
+      : this.invoiceService.getMine();
+
+    invoices$.subscribe({
       next: invoices => {
         this.invoices.set(invoices);
         this.loading.set(false);
