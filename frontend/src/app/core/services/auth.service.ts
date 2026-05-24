@@ -17,6 +17,7 @@ export class AuthService {
   readonly isLoggedIn = computed(() => !!this._token());
   readonly currentRole = computed(() => this.getPayload()?.role ?? null);
   readonly currentUserName = computed(() => this.getPayload()?.name ?? null);
+  readonly currentUserId = computed(() => this.getPayload()?.id ?? null);
 
   register(data: { name: string; email: string; password: string }) {
     return this.http.post<{ userId: string }>(`${API_URL}/auth/register`, data);
