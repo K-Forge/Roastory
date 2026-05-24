@@ -26,5 +26,11 @@ export const routes: Routes = [
       import('./features/invoices/invoice-detail/invoice-detail.component').then(m => m.InvoiceDetailComponent),
     canActivate: [authGuard]
   },
+  {
+    path: 'dashboard',
+    loadComponent: () =>
+      import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent),
+    canActivate: [authGuard]
+  },
   { path: '**', redirectTo: 'login' }
 ];

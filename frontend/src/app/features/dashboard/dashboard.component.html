@@ -1,0 +1,69 @@
+@if (loading()) {
+  <div class="loading-wrapper">
+    <p-progressSpinner ariaLabel="Cargando..." />
+  </div>
+} @else {
+  <div class="dashboard">
+    <h2 class="dashboard-title">
+      <i class="pi pi-home"></i> Panel de control
+    </h2>
+
+    <div class="kpi-grid">
+
+      <p-card styleClass="kpi-card">
+        <div class="kpi-content">
+          <i class="pi pi-box kpi-icon products"></i>
+          <div class="kpi-data">
+            <span class="kpi-value">{{ totalProducts() }}</span>
+            <span class="kpi-label">Productos totales</span>
+          </div>
+        </div>
+      </p-card>
+
+      <p-card styleClass="kpi-card">
+        <div class="kpi-content">
+          <i class="pi pi-check-circle kpi-icon active"></i>
+          <div class="kpi-data">
+            <span class="kpi-value">{{ activeProducts() }}</span>
+            <span class="kpi-label">Productos activos</span>
+          </div>
+        </div>
+      </p-card>
+
+      @if (isAdmin()) {
+        <p-card styleClass="kpi-card">
+          <div class="kpi-content">
+            <i class="pi pi-receipt kpi-icon invoices"></i>
+            <div class="kpi-data">
+              <span class="kpi-value">{{ totalInvoices() }}</span>
+              <span class="kpi-label">Facturas emitidas</span>
+            </div>
+          </div>
+        </p-card>
+
+        <p-card styleClass="kpi-card">
+          <div class="kpi-content">
+            <i class="pi pi-dollar kpi-icon revenue"></i>
+            <div class="kpi-data">
+              <span class="kpi-value">{{ totalRevenue() | currency:'COP':'symbol':'1.0-0' }}</span>
+              <span class="kpi-label">Ingresos totales</span>
+            </div>
+          </div>
+        </p-card>
+      }
+
+      @if (lowStockProducts() > 0) {
+        <p-card styleClass="kpi-card kpi-warning">
+          <div class="kpi-content">
+            <i class="pi pi-exclamation-triangle kpi-icon warning"></i>
+            <div class="kpi-data">
+              <span class="kpi-value">{{ lowStockProducts() }}</span>
+              <span class="kpi-label">Productos con stock bajo</span>
+            </div>
+          </div>
+        </p-card>
+      }
+
+    </div>
+  </div>
+}
