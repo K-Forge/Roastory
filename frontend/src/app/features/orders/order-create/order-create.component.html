@@ -1,0 +1,118 @@
+<p-toast />
+
+<div class="page-header">
+  <p-button
+    icon="pi pi-arrow-left"
+    label="Volver"
+    severity="secondary"
+    [outlined]="true"
+    (onClick)="goBack()"
+  />
+  <h2><i class="pi pi-shopping-cart"></i> Nueva orden</h2>
+</div>
+
+<div class="pos-layout">
+
+  <!-- Panel izquierdo: catálogo de productos -->
+  <p-card header="Productos disponibles">
+    <p-iconfield>
+      <p-inputicon class="pi pi-search" />
+      <input
+        pInputText
+        type="text"
+        placeholder="Buscar producto..."
+        [ngModel]="searchText()"
+        (ngModelChange)="searchText.set($event)"
+        class="w-full"
+      />
+    </p-iconfield>
+
+    <div class="product-grid">
+      @for (product of filteredProducts(); track product._id) {
+        <div class="product-card" (click)="addToCart(product)">
+          <div class="product-name">{{ product.name }}</div>
+          <div class="product-price">{{ product.price | currency:'COP':'symbol-narrow':'1.0-0' }}</div>
+          <small class="product-stock">Stock: {{ product.stock }}</small>
+        </div>
+      } @empty {
+        <p class="empty-products">No hay productos disponibles.</p>
+      }
+    </div>
+  </p-card>
+
+  <!-- Panel derecho: carrito -->
+  <p-card header="Carrito">
+
+    @if (cartItems().length === 0) {
+      <div class="empty-cart">
+        <i class="pi pi-shopping-cart"></i>
+        <p>Selecciona productos del catálogo</p>
+      </div>
+    } @else {
+      <div class="cart-items">
+        @for (item of cartItems(); track item.product._id) {
+          <div class="cart-item">
+            <div class="item-name">{{ item.product.name }}</div>
+            <div class="item-controls">
+              <p-button
+                icon="pi pi-minus"
+                size="small"
+                [text]="true"
+                severity="secondary"
+                (onClick)="updateQuantity(item.product._id, item.quantity - 1)"
+              />
+              <span class="item-qty">{{ item.quantity }}</span>
+              <p-button
+                icon="pi pi-plus"
+                size="small"
+                [text]="true"
+                severity="secondary"
+                (onClick)="updateQuantity(item.product._id, item.quantity + 1)"
+              />
+            </div>
+            <div class="item-subtotal">
+              {{ item.product.price * item.quantity | currency:'COP':'symbol-narrow':'1.0-0' }}
+            </div>
+            <p-button
+              icon="pi pi-times"
+              size="small"
+              [text]="true"
+              severity="danger"
+              (onClick)="removeFromCart(item.product._id)"
+            />
+          </div>
+        }
+      </div>
+
+      <p-divider />
+
+      <div class="cart-total">
+        <span>Total</span>
+        <strong>{{ total() | currency:'COP':'symbol-narrow':'1.0-0' }}</strong>
+      </div>
+
+      <div class="field">
+        <label>Método de pago</label>
+        <p-select
+          [options]="paymentOptions"
+          [ngModel]="selectedPaymentMethod()"
+          (ngModelChange)="selectedPaymentMethod.set($event)"
+          optionLabel="label"
+          optionValue="value"
+          styleClass="w-full"
+        />
+      </div>
+
+      <p-button
+        label="Confirmar orden"
+        icon="pi pi-check"
+        styleClass="w-full"
+        [loading]="submitting()"
+        [disabled]="cartItems().length === 0"
+        (onClick)="submit()"
+      />
+    }
+
+  </p-card>
+
+</div>
