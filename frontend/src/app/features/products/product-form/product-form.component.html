@@ -1,0 +1,90 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="product-form">
+
+  <div class="field">
+    <label>Nombre *</label>
+    <input pInputText formControlName="name" class="w-full" placeholder="Ej: Café Americano" />
+    @if (form.controls.name.invalid && form.controls.name.touched) {
+      <small class="error-hint">El nombre es obligatorio.</small>
+    }
+  </div>
+
+  <div class="field">
+    <label>Descripción</label>
+    <textarea pTextarea formControlName="description" class="w-full" rows="2" placeholder="Descripción breve del producto"></textarea>
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label>Categoría *</label>
+      <p-select
+        formControlName="category"
+        [options]="categoryOptions"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Selecciona..."
+        styleClass="w-full"
+      />
+      @if (form.controls.category.invalid && form.controls.category.touched) {
+        <small class="error-hint">La categoría es obligatoria.</small>
+      }
+    </div>
+
+    <div class="field">
+      <label>SKU</label>
+      <input pInputText formControlName="sku" class="w-full" placeholder="Ej: CAF-001" />
+    </div>
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label>Precio (COP) *</label>
+      <p-inputnumber
+        formControlName="price"
+        mode="currency"
+        currency="COP"
+        locale="es-CO"
+        styleClass="w-full"
+        inputStyleClass="w-full"
+        [min]="1"
+      />
+      @if (form.controls.price.invalid && form.controls.price.touched) {
+        <small class="error-hint">El precio debe ser mayor a 0.</small>
+      }
+    </div>
+
+    <div class="field">
+      <label>Stock *</label>
+      <p-inputnumber
+        formControlName="stock"
+        styleClass="w-full"
+        inputStyleClass="w-full"
+        [min]="0"
+      />
+    </div>
+  </div>
+
+  @if (isBook) {
+    <div class="field">
+      <label>Autor</label>
+      <input pInputText formControlName="author" class="w-full" placeholder="Ej: Gabriel García Márquez" />
+    </div>
+  }
+
+  <div class="form-actions">
+    <p-button
+      label="Cancelar"
+      severity="secondary"
+      [outlined]="true"
+      (onClick)="cancel()"
+      type="button"
+    />
+    <p-button
+      [label]="product() ? 'Guardar cambios' : 'Crear producto'"
+      icon="pi pi-check"
+      type="submit"
+      [loading]="loading"
+      [disabled]="form.invalid"
+    />
+  </div>
+
+</form>

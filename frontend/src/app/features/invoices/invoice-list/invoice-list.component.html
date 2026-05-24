@@ -1,0 +1,87 @@
+<p-toast />
+<p-confirmdialog />
+
+<div class="page-header">
+  <h2><i class="pi pi-receipt"></i> Facturas</h2>
+</div>
+
+<p-table
+  [value]="invoices()"
+  [loading]="loading()"
+  [paginator]="true"
+  [rows]="10"
+  [rowsPerPageOptions]="[5, 10, 25]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} facturas"
+  styleClass="p-datatable-sm p-datatable-striped"
+>
+  <ng-template #header>
+    <tr>
+      <th>N° Factura</th>
+      <th>Cliente</th>
+      <th>Fecha</th>
+      <th>Total</th>
+      <th>Pago</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-invoice>
+    <tr>
+      <td class="invoice-number">{{ invoice.invoiceNumber }}</td>
+      <td>
+        <div>{{ invoice.customer?.name }}</div>
+        <small class="text-muted">{{ invoice.customer?.email }}</small>
+      </td>
+      <td>{{ invoice.issuedAt | date:'dd/MM/yyyy' }}</td>
+      <td class="total">{{ invoice.total | currency:'COP':'symbol-narrow':'1.0-0' }}</td>
+      <td>{{ getPaymentLabel(invoice.paymentMethod) }}</td>
+      <td>
+        <p-tag
+          [value]="getStatusLabel(invoice.status)"
+          [severity]="getStatusSeverity(invoice.status)"
+        />
+      </td>
+      <td class="actions">
+        <p-button
+          icon="pi pi-eye"
+          severity="info"
+          size="small"
+          [rounded]="true"
+          [text]="true"
+          (onClick)="viewDetail(invoice._id)"
+          pTooltip="Ver detalle"
+        />
+        <p-button
+          icon="pi pi-download"
+          severity="secondary"
+          size="small"
+          [rounded]="true"
+          [text]="true"
+          (onClick)="downloadPdf(invoice)"
+          pTooltip="Descargar PDF"
+        />
+        @if (invoice.status === 'ISSUED') {
+          <p-button
+            icon="pi pi-ban"
+            severity="danger"
+            size="small"
+            [rounded]="true"
+            [text]="true"
+            (onClick)="confirmVoid(invoice)"
+            pTooltip="Anular"
+          />
+        }
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="7" class="empty-message">
+        <i class="pi pi-inbox"></i> No hay facturas registradas.
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
