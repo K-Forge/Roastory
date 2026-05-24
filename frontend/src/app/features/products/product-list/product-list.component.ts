@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
@@ -13,6 +13,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ProductService } from '../../../core/services/product.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { Product, ProductCategory } from '../../../shared/models/product.model';
 import { ProductFormComponent } from '../product-form/product-form.component';
 
@@ -44,8 +45,14 @@ interface CategoryOption {
 })
 export class ProductListComponent implements OnInit {
   private productService = inject(ProductService);
+  private authService = inject(AuthService);
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
+
+  readonly canManage = computed(() => {
+    const role = this.authService.currentRole();
+    return role === 'ADMIN' || role === 'INVENTORY_MANAGER';
+  });
 
   products = signal<Product[]>([]);
   loading = signal(false);
