@@ -38,6 +38,18 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'orders/new',
+    loadComponent: () =>
+      import('./features/orders/order-create/order-create.component').then(m => m.OrderCreateComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'orders/:id',
+    loadComponent: () =>
+      import('./features/orders/order-detail/order-detail.component').then(m => m.OrderDetailComponent),
+    canActivate: [authGuard]
+  },
+  {
     path: 'dashboard',
     loadComponent: () =>
       import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent),
