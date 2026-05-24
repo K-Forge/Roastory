@@ -9,6 +9,7 @@ export interface Product {
   stock: number;
   sku?: string;
   author?: string;
+  imageUrl?: string | null;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
