@@ -18,6 +18,10 @@ export class AuthService {
   readonly currentRole = computed(() => this.getPayload()?.role ?? null);
   readonly currentUserName = computed(() => this.getPayload()?.name ?? null);
 
+  register(data: { name: string; email: string; password: string }) {
+    return this.http.post<{ userId: string }>(`${API_URL}/auth/register`, data);
+  }
+
   login(credentials: LoginDto) {
     return this.http.post<LoginResponse>(`${API_URL}/auth/login`, credentials).pipe(
       tap(({ token }) => {
