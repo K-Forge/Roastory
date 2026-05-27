@@ -2,7 +2,9 @@ const Invoice = require('../models/invoice.model');
 const Order = require('../models/order.model');
 const PDFDocument = require('pdfkit');
 
-const TAX_RATE = 0.19;
+const TAX_RATE = 0.19; // IVA Colombia
+
+// POST /api/invoices — Generar una factura a partir de una orden completada
 
 const createInvoice = async (req, res) => {
   try {
@@ -12,12 +14,14 @@ const createInvoice = async (req, res) => {
       return res.status(400).json({ message: 'El campo orderId es obligatorio' });
     }
 
+    // Buscar la orden y traer el nombre y precio de cada producto
     const order = await Order.findById(orderId).populate('items.product', 'name price');
 
     if (!order) {
       return res.status(404).json({ message: 'Orden no encontrada' });
     }
 
+    // Solo se puede facturar una orden que ya esté completada
     if (order.status !== 'COMPLETED') {
       return res.status(400).json({
         message: 'Solo se pueden facturar órdenes con estado COMPLETED',
@@ -25,6 +29,7 @@ const createInvoice = async (req, res) => {
       });
     }
 
+    // Verificar que la orden no tenga ya una factura (order es unique en el modelo)
     const existingInvoice = await Invoice.findOne({ order: orderId });
     if (existingInvoice) {
       return res.status(400).json({
@@ -34,6 +39,8 @@ const createInvoice = async (req, res) => {
       });
     }
 
+    // Construir el snapshot de ítems — se guarda el nombre y precio del momento actual,
+    // no una referencia, para que la factura sea inmutable ante cambios futuros
     const items = order.items.map((item) => ({
       productName: item.product.name,
       quantity: item.quantity,
@@ -41,10 +48,12 @@ const createInvoice = async (req, res) => {
       subtotal: item.quantity * item.price
     }));
 
+    // Calcular totales
     const subtotal = items.reduce((acc, item) => acc + item.subtotal, 0);
     const tax = parseFloat((subtotal * TAX_RATE).toFixed(2));
     const total = parseFloat((subtotal + tax).toFixed(2));
 
+    // Generar número de factura secuencial (INV-2026-00001)
     const invoiceNumber = await Invoice.generateInvoiceNumber();
 
     const newInvoice = new Invoice({
@@ -70,6 +79,7 @@ const createInvoice = async (req, res) => {
   }
 };
 
+// GET /api/invoices — Listar todas las facturas (solo ADMIN)
 const getInvoices = async (req, res) => {
   try {
     const invoices = await Invoice.find()
@@ -86,6 +96,7 @@ const getInvoices = async (req, res) => {
   }
 };
 
+// GET /api/invoices/me — Facturas del usuario autenticado
 const getMyInvoices = async (req, res) => {
   try {
     const invoices = await Invoice.find({ customer: req.user.id })
@@ -101,6 +112,8 @@ const getMyInvoices = async (req, res) => {
   }
 };
 
+// GET /api/invoices/:id — Obtener una factura específica
+// Acceso: ADMIN, CASHIER, o el cliente dueño de la factura
 const getInvoiceById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -113,6 +126,7 @@ const getInvoiceById = async (req, res) => {
       return res.status(404).json({ message: 'Factura no encontrada' });
     }
 
+    // Si el usuario no es ADMIN ni CASHIER, solo puede ver su propia factura
     const isPrivileged = ['ADMIN', 'CASHIER'].includes(req.user.role);
     const isOwner = invoice.customer._id.toString() === req.user.id;
 
@@ -126,6 +140,8 @@ const getInvoiceById = async (req, res) => {
   }
 };
 
+// PATCH /api/invoices/:id/void — Anular una factura (solo ADMIN)
+// No se elimina — se marca como VOIDED para mantener integridad fiscal
 const voidInvoice = async (req, res) => {
   try {
     const { id } = req.params;
@@ -152,6 +168,7 @@ const voidInvoice = async (req, res) => {
   }
 };
 
+// GET /api/invoices/:id/pdf — Genera y descarga el PDF de la factura
 const downloadInvoicePDF = async (req, res) => {
   try {
     const { id } = req.params;
@@ -162,6 +179,7 @@ const downloadInvoicePDF = async (req, res) => {
       return res.status(404).json({ message: 'Factura no encontrada' });
     }
 
+    // Verificar permisos: ADMIN, CASHIER o el cliente dueño
     const isPrivileged = ['ADMIN', 'CASHIER'].includes(req.user.role);
     const isOwner = invoice.customer._id.toString() === req.user.id;
 
@@ -169,6 +187,7 @@ const downloadInvoicePDF = async (req, res) => {
       return res.status(403).json({ message: 'No tienes permiso para descargar esta factura' });
     }
 
+    // Configurar headers para que el navegador descargue el archivo
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader(
       'Content-Disposition',
@@ -177,7 +196,10 @@ const downloadInvoicePDF = async (req, res) => {
 
     const doc = new PDFDocument({ margin: 50 });
 
+    // Conectar el stream del PDF directamente a la respuesta HTTP
     doc.pipe(res);
+
+    // ── ENCABEZADO ──────────────────────────────────────────────────────────
 
     doc
       .fontSize(28)
@@ -192,6 +214,7 @@ const downloadInvoicePDF = async (req, res) => {
 
     doc.moveDown(0.5);
 
+    // Línea divisora
     doc
       .moveTo(50, doc.y)
       .lineTo(545, doc.y)
@@ -200,6 +223,7 @@ const downloadInvoicePDF = async (req, res) => {
 
     doc.moveDown(1);
 
+    // ── DATOS DE LA FACTURA ─────────────────────────────────────────────────
     doc.fillColor('#000000').fontSize(10).font('Helvetica-Bold').text('FACTURA', 50);
     doc.moveDown(0.3);
 
@@ -211,6 +235,7 @@ const downloadInvoicePDF = async (req, res) => {
 
     doc.moveDown(1);
 
+    // ── DATOS DEL CLIENTE ───────────────────────────────────────────────────
     doc.font('Helvetica-Bold').fontSize(10).text('CLIENTE');
     doc.moveDown(0.3);
     doc.font('Helvetica').fontSize(10);
@@ -219,6 +244,7 @@ const downloadInvoicePDF = async (req, res) => {
 
     doc.moveDown(1);
 
+    // ── TABLA DE ÍTEMS ──────────────────────────────────────────────────────
     doc.font('Helvetica-Bold').fontSize(10).text('DETALLE DE PRODUCTOS');
     doc.moveDown(0.5);
 
@@ -238,10 +264,12 @@ const downloadInvoicePDF = async (req, res) => {
       .text('Precio unit.', col.precio + 4, tableTop + 5)
       .text('Subtotal', col.subtotal + 4, tableTop + 5);
 
+    // Filas de productos
     let rowY = tableTop + 22;
     doc.fillColor('#000000').font('Helvetica').fontSize(9);
 
     invoice.items.forEach((item, index) => {
+      // Fondo alterno para cada fila
       if (index % 2 === 0) {
         doc.rect(50, rowY - 2, 495, 18).fill('#f5f5f5');
       }
@@ -256,6 +284,7 @@ const downloadInvoicePDF = async (req, res) => {
       rowY += 20;
     });
 
+    // Línea al final de la tabla
     doc
       .moveTo(50, rowY)
       .lineTo(545, rowY)
@@ -264,6 +293,7 @@ const downloadInvoicePDF = async (req, res) => {
 
     doc.moveDown(1.5);
 
+    // ── TOTALES ─────────────────────────────────────────────────────────────
     const totalsX = 370;
     doc.font('Helvetica').fontSize(10);
     doc.text('Subtotal:', totalsX, doc.y, { continued: true }).text(`$${invoice.subtotal.toLocaleString('es-CO')}`, { align: 'right' });
@@ -284,6 +314,7 @@ const downloadInvoicePDF = async (req, res) => {
     doc.fillColor('#000000');
     doc.moveDown(3);
 
+    // ── PIE DE PÁGINA ────────────────────────────────────────────────────────
     doc
       .moveTo(50, doc.y)
       .lineTo(545, doc.y)
@@ -298,6 +329,7 @@ const downloadInvoicePDF = async (req, res) => {
       .text('Roastory — Sistema de gestión de librería-cafetería', { align: 'center' })
       .text('Este documento es una factura electrónica válida.', { align: 'center' });
 
+    // Cerrar el documento — esto envía el PDF al cliente
     doc.end();
   } catch (error) {
     res.status(500).json({ message: 'Error al generar el PDF', error: error.message });

@@ -75,6 +75,36 @@ Desarrollado por **K-Forge** como proyecto final de NTD en la Fundacion Universi
 </div>
 
 
+## Cómo ejecutar
+
+> **Requisitos previos:** Node.js ≥ 18 y pnpm (`npm i -g pnpm`)
+
+**1. Configurar variables de entorno**
+
+Crear el archivo `backend/.env` con el siguiente contenido:
+
+```env
+PORT=3000
+MONGO_URI=     # Connection string de MongoDB Atlas (ej: mongodb+srv://user:pass@cluster.mongodb.net/roastory)
+JWT_SECRET=    # Cualquier cadena secreta larga (ej: mi_clave_super_secreta_123)
+```
+
+**2. Backend**
+```bash
+cd backend
+pnpm install
+pnpm run dev     # http://localhost:3000
+```
+
+**3. Frontend**
+```bash
+cd frontend
+pnpm install
+ng serve         # http://localhost:4200
+```
+
+---
+
 ## Licencia
 
 Ver [LICENSE](LICENSE)

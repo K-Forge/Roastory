@@ -38,11 +38,23 @@ const productsData = [
   { name: 'Rayuela',                   description: 'Julio Cortázar — Editorial Sudamericana, 1963',              category: 'BOOK',    price: 40000, stock: 8,  sku: 'LIB-004', author: 'Julio Cortázar' },
   { name: 'Pedro Páramo',              description: 'Juan Rulfo — Fondo de Cultura Económica, 1955',              category: 'BOOK',    price: 35000, stock: 20, sku: 'LIB-005', author: 'Juan Rulfo' },
   // Repostería
-  { name: 'Croissant de Mantequilla', description: 'Hojaldre crujiente con mantequilla francesa',                 category: 'PASTRY',  price: 4500,  stock: 30, sku: 'REP-001' },
-  { name: 'Brownie de Chocolate',     description: 'Brownie húmedo con chispas de chocolate amargo',              category: 'PASTRY',  price: 5000,  stock: 25, sku: 'REP-002' },
-  { name: 'Muffin de Arándanos',      description: 'Muffin esponjoso con arándanos frescos y azúcar morena',     category: 'PASTRY',  price: 4000,  stock: 35, sku: 'REP-003' },
-  { name: 'Cheesecake de Frutos Rojos',description: 'Cheesecake cremoso con coulis de frutos rojos',             category: 'PASTRY',  price: 8500,  stock: 20, sku: 'REP-004' },
-  { name: 'Torta Tres Leches',        description: 'Bizcocho bañado en tres tipos de leche, con crema batida',   category: 'PASTRY',  price: 7500,  stock: 15, sku: 'REP-005' },
+  { name: 'Croissant de Mantequilla', description: 'Hojaldre crujiente con mantequilla francesa',                 category: 'PASTRY',  price: 4500,  stock: 30, sku: 'REP-001', imageUrl: null },
+  { name: 'Brownie de Chocolate',     description: 'Brownie húmedo con chispas de chocolate amargo',              category: 'PASTRY',  price: 5000,  stock: 25, sku: 'REP-002', imageUrl: null },
+  { name: 'Muffin de Arándanos',      description: 'Muffin esponjoso con arándanos frescos y azúcar morena',     category: 'PASTRY',  price: 4000,  stock: 35, sku: 'REP-003', imageUrl: null },
+  { name: 'Cheesecake de Frutos Rojos',description: 'Cheesecake cremoso con coulis de frutos rojos',             category: 'PASTRY',  price: 8500,  stock: 20, sku: 'REP-004', imageUrl: null },
+  { name: 'Torta Tres Leches',        description: 'Bizcocho bañado en tres tipos de leche, con crema batida',   category: 'PASTRY',  price: 7500,  stock: 15, sku: 'REP-005', imageUrl: null },
+  // Cafés adicionales
+  { name: 'Cold Brew',                description: 'Café preparado en frío durante 12 horas, suave y refrescante', category: 'COFFEE', price: 7500,  stock: 40, sku: 'CAF-006', imageUrl: null },
+  { name: 'Matcha Latte',             description: 'Té matcha japonés con leche vaporizada y miel',               category: 'COFFEE', price: 8000,  stock: 30, sku: 'CAF-007', imageUrl: null },
+  { name: 'Café con Canela',          description: 'Espresso suavizado con canela molida y un toque de panela',   category: 'COFFEE', price: 5500,  stock: 50, sku: 'CAF-008', imageUrl: null },
+  // Libros adicionales
+  { name: 'Ficciones',                description: 'Jorge Luis Borges — Emecé Editores, 1944',                    category: 'BOOK',   price: 36000, stock: 12, sku: 'LIB-006', author: 'Jorge Luis Borges',   imageUrl: null },
+  { name: 'La Casa de los Espíritus', description: 'Isabel Allende — Plaza & Janés, 1982',                        category: 'BOOK',   price: 43000, stock: 9,  sku: 'LIB-007', author: 'Isabel Allende',      imageUrl: null },
+  { name: 'El Túnel',                 description: 'Ernesto Sabato — Editorial Sur, 1948',                        category: 'BOOK',   price: 32000, stock: 14, sku: 'LIB-008', author: 'Ernesto Sabato',      imageUrl: null },
+  // Repostería adicional
+  { name: 'Torta de Zanahoria',       description: 'Bizcocho húmedo de zanahoria con frosting de queso crema',   category: 'PASTRY', price: 6500,  stock: 18, sku: 'REP-006', imageUrl: null },
+  { name: 'Galleta de Mantequilla',   description: 'Galleta crujiente con mantequilla y esencia de vainilla',    category: 'PASTRY', price: 2500,  stock: 50, sku: 'REP-007', imageUrl: null },
+  { name: 'Empanada de Guayaba',      description: 'Hojaldre relleno de bocadillo de guayaba colombiano',        category: 'PASTRY', price: 3500,  stock: 40, sku: 'REP-008', imageUrl: null },
 ];
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────

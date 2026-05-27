@@ -1,0 +1,14 @@
+@import "primeicons/primeicons.css";
+@import "primeflex/primeflex.css";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--p-font-family, 'Segoe UI', sans-serif);
+  background-color: var(--p-surface-50, #f8fafc);
+  color: var(--p-surface-900, #1e293b);
+}

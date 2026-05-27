@@ -1,0 +1,94 @@
+<p-toast />
+<p-confirmdialog />
+
+<div class="page-header">
+  <h2><i class="pi pi-shopping-cart"></i> Órdenes</h2>
+  <p-button
+    label="Nueva orden"
+    icon="pi pi-plus"
+    (onClick)="goToNew()"
+  />
+</div>
+
+<div class="filter-bar">
+  <p-select
+    [options]="statusOptions"
+    [ngModel]="selectedStatus()"
+    (ngModelChange)="selectedStatus.set($event)"
+    optionLabel="label"
+    optionValue="value"
+    placeholder="Filtrar por estado"
+  />
+</div>
+
+<p-table
+  [value]="filteredOrders"
+  [loading]="loading()"
+  [paginator]="true"
+  [rows]="10"
+  [rowsPerPageOptions]="[5, 10, 25]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} órdenes"
+  styleClass="p-datatable-sm p-datatable-striped"
+>
+  <ng-template #header>
+    <tr>
+      <th>ID</th>
+      <th>Cliente</th>
+      <th>Total</th>
+      <th>Pago</th>
+      <th>Estado</th>
+      <th>Fecha</th>
+      <th>Acciones</th>
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-order>
+    <tr>
+      <td class="order-id">#{{ order._id.slice(-6).toUpperCase() }}</td>
+      <td>
+        <div>{{ order.customer?.name }}</div>
+        <small class="text-muted">{{ order.customer?.email }}</small>
+      </td>
+      <td class="total">{{ order.totalAmount | currency:'COP':'symbol-narrow':'1.0-0' }}</td>
+      <td>{{ getPaymentLabel(order.paymentMethod) }}</td>
+      <td>
+        <p-tag
+          [value]="getStatusLabel(order.status)"
+          [severity]="getStatusSeverity(order.status)"
+        />
+      </td>
+      <td>{{ order.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+      <td class="actions">
+        <p-button
+          icon="pi pi-eye"
+          severity="info"
+          size="small"
+          [rounded]="true"
+          [text]="true"
+          (onClick)="viewDetail(order._id)"
+          pTooltip="Ver detalle"
+        />
+        @if (isAdmin()) {
+          <p-button
+            icon="pi pi-trash"
+            severity="danger"
+            size="small"
+            [rounded]="true"
+            [text]="true"
+            (onClick)="confirmDelete(order)"
+            pTooltip="Eliminar"
+          />
+        }
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="7" class="empty-message">
+        <i class="pi pi-inbox"></i> No hay órdenes registradas.
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
